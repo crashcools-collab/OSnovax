@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NexusAI — Services IA : agents autonomes, automatisation de workflows, fine-tuning de modèles, data pipelines et consulting stratégique.">
+  <title>Services | NexusAI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050508; --bg2: #0c0c14; --accent: #4F46E5; --green: #10B981;
+      --white: #F0EEF8; --muted: #6b6b8a; --border: rgba(79,70,229,0.18);
+      --font-display: 'Syne', sans-serif; --font-mono: 'DM Mono', monospace;
+      --glow: 0 0 40px rgba(79,70,229,0.3);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--white); font-family: var(--font-display); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 4rem; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.7); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2.5rem; font-size: 0.85rem; font-family: var(--font-mono); }
+    .nav-links a { color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .nav-cta { background: var(--accent); color: var(--white); padding: 0.55rem 1.4rem; border-radius: 4px; font-size: 0.85rem; font-family: var(--font-mono); transition: background 0.2s; }
+    .nav-cta:hover { background: #6b63f5; }
+
+    .page-hero {
+      padding: 10rem 4rem 5rem; background: var(--bg);
+      border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(79,70,229,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(79,70,229,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 30% 50%, black 30%, transparent 100%);
+    }
+    .page-hero-content { position: relative; z-index: 2; }
+    .breadcrumb { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .breadcrumb a { color: var(--accent); }
+    h1 { font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+    .page-sub { font-family: var(--font-mono); font-size: 1rem; color: var(--muted); max-width: 560px; line-height: 1.8; margin-top: 1.5rem; }
+    .section-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--green); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+
+    /* SERVICES DÉTAILLÉS */
+    .services-section { padding: 6rem 4rem; background: var(--bg); }
+    .service-row {
+      display: grid; grid-template-columns: 1fr 1.5fr; gap: 6rem;
+      align-items: start; padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .service-row:last-child { border-bottom: none; }
+    .service-row:nth-child(even) { direction: rtl; }
+    .service-row:nth-child(even) > * { direction: ltr; }
+    .service-meta { position: sticky; top: 8rem; }
+    .service-num { font-size: 5rem; font-weight: 800; line-height: 1; color: rgba(79,70,229,0.1); font-family: var(--font-mono); }
+    .service-icon-lg { font-size: 2.5rem; margin-bottom: 1rem; }
+    .service-meta h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 1rem; }
+    .service-meta p { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+    .tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tech-pill {
+      padding: 0.3rem 0.8rem; border: 1px solid var(--border); border-radius: 100px;
+      font-size: 0.68rem; font-family: var(--font-mono); color: var(--accent);
+    }
+    .service-details { padding-top: 1rem; }
+    .detail-item { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+    .detail-item:last-child { border-bottom: none; }
+    .detail-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .detail-item p { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+    .detail-item .metric {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 0.75rem; padding: 0.3rem 0.8rem;
+      background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 4px; font-size: 0.72rem; font-family: var(--font-mono); color: var(--green);
+    }
+
+    /* PRICING */
+    .pricing-section { padding: 6rem 4rem; background: var(--bg2); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .pricing-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 2.5rem; position: relative; transition: border-color 0.3s;
+    }
+    .pricing-card.featured {
+      border-color: var(--accent);
+      background: rgba(79,70,229,0.05);
+    }
+    .featured-badge {
+      position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); padding: 0.3rem 1rem;
+      border-radius: 0 0 8px 8px; font-size: 0.7rem; font-family: var(--font-mono);
+    }
+    .plan-name { font-size: 0.8rem; font-family: var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .plan-price { font-size: 3rem; font-weight: 800; letter-spacing: -0.04em; margin: 0.75rem 0 0.25rem; }
+    .plan-period { font-size: 0.8rem; font-family: var(--font-mono); color: var(--muted); }
+    .plan-desc { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); line-height: 1.7; margin: 1.5rem 0; }
+    .plan-features { list-style: none; margin-bottom: 2rem; }
+    .plan-features li {
+      font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);
+      padding: 0.5rem 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .plan-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+    .btn-plan {
+      display: block; text-align: center; padding: 0.85rem;
+      border-radius: 6px; font-size: 0.85rem; font-family: var(--font-mono);
+      transition: all 0.2s;
+    }
+    .btn-plan-primary { background: var(--accent); color: var(--white); }
+    .btn-plan-primary:hover { background: #6b63f5; }
+    .btn-plan-ghost { border: 1px solid var(--border); color: var(--white); }
+    .btn-plan-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* FAQ */
+    .faq-section { padding: 6rem 4rem; background: var(--bg); }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+    .faq-item {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.8rem; cursor: pointer;
+    }
+    .faq-q { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .faq-a { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); line-height: 1.8; }
+
+    footer {
+      background: var(--bg2); border-top: 1px solid var(--border); padding: 4rem;
+    }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 2rem;
+    }
+    .footer-bottom p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      .page-hero, .services-section, .pricing-section, .faq-section { padding: 5rem 1.5rem; }
+      .service-row { grid-template-columns: 1fr; gap: 2rem; }
+      .service-row:nth-child(even) { direction: ltr; }
+      .service-meta { position: static; }
+      .pricing-grid, .faq-grid { grid-template-columns: 1fr; }
+      footer { padding: 3rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Nexus<span>AI</span></div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="services.html" class="active">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Démarrer un projet →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-grid-bg"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> / Services</div>
+    <div class="section-label">// Ce qu'on construit</div>
+    <h1>Des systèmes IA<br>qui travaillent<br>à votre place</h1>
+    <p class="page-sub">Six expertises complémentaires. Une seule obsession : que ça fonctionne en production, pas juste en démo.</p>
+  </div>
+</div>
+
+<div class="services-section">
+
+  <div class="service-row">
+    <div class="service-meta">
+      <div class="service-num">01</div>
+      <div class="service-icon-lg">🤖</div>
+      <h2>Agents IA autonomes</h2>
+      <p>Des agents capables d'exécuter des workflows complets sans supervision humaine. Recherche, analyse, décision, action.</p>
+      <div class="tech-stack">
+        <span class="tech-pill">LangChain</span>
+        <span class="tech-pill">AutoGen</span>
+        <span class="tech-pill">CrewAI</span>
+        <span class="tech-pill">OpenAI Functions</span>
+        <span class="tech-pill">Claude API</span>
+      </div>
+    </div>
+    <div class="service-details">
+      <div class="detail-item">
+        <h4>Agent de qualification de leads</h4>
+        <p>Scrape LinkedIn, enrichit les données via Apollo/Hunter, rédige des emails personnalisés et les envoie au bon moment. Zéro intervention humaine.</p>
+        <span class="metric">↑ 3x plus de leads qualifiés / semaine</span>
+      </div>
+      <div class="detail-item">
+        <h4>Agent de veille concurrentielle</h4>
+        <p>Surveille vos concurrents (prix, offres, actualités) et génère un rapport consolidé chaque matin dans votre Slack.</p>
+        <span class="metric">↓ 8h/semaine de travail manuel éliminées</span>
+      </div>
+      <div class="detail-item">
+        <h4>Agent de support client niveau 1</h4>
+        <p>Résout 70-80% des tickets entrants en s'appuyant sur votre documentation. Escalade automatique pour les cas complexes.</p>
+        <span class="metric">↑ CSAT +31% sur les clients équipés</span>
+      </div>
+      <div class="detail-item">
+        <h4>Agent d'analyse de documents</h4>
+        <p>Lecture, extraction et structuration de documents PDF, contrats, rapports. Sortie en JSON/CSV pour vos systèmes downstream.</p>
+        <span class="metric">2000+ docs traités / jour en production</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="service-row">
+    <div class="service-meta">
+      <div class="service-num">02</div>
+      <div class="service-icon-lg">⚡</div>
+      <h2>Automatisation de workflows</h2>
+      <p>Élimination systématique des tâches répétitives. Si ça peut être automatisé, ça le sera.</p>
+      <div class="tech-stack">
+        <span class="tech-pill">Make (Integromat)</span>
+        <span class="tech-pill">n8n</span>
+        <span class="tech-pill">Zapier</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Webhooks</span>
+      </div>
+    </div>
+    <div class="service-details">
+      <div class="detail-item">
+        <h4>Automatisation commerciale</h4>
+        <p>De la capture de lead (formulaire, LinkedIn, email) à la création dans le CRM, l'assignation commerciale et le premier email de nurturing. Tout automatique.</p>
+        <span class="metric">↓ 0 saisie manuelle dans le CRM</span>
+      </div>
+      <div class="detail-item">
+        <h4>Reporting automatique</h4>
+        <p>Agrégation des données de vos outils (GA4, Stripe, HubSpot), calcul des KPIs, génération du rapport PDF et envoi par email chaque lundi.</p>
+        <span class="metric">↓ 4h/semaine par manager</span>
+      </div>
+      <div class="detail-item">
+        <h4>Facturation & comptabilité</h4>
+        <p>Déclenchement automatique des factures à la livraison, synchronisation avec votre outil comptable, relances de paiement échelonnées.</p>
+        <span class="metric">↓ Délai de paiement moyen -12 jours</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="service-row">
+    <div class="service-meta">
+      <div class="service-num">03</div>
+      <div class="service-icon-lg">🧠</div>
+      <h2>Fine-tuning de modèles</h2>
+      <p>Spécialisation de LLMs sur vos données métier pour des performances que les modèles génériques ne peuvent pas atteindre.</p>
+      <div class="tech-stack">
+        <span class="tech-pill">OpenAI Fine-tuning</span>
+        <span class="tech-pill">Mistral</span>
+        <span class="tech-pill">LoRA / QLoRA</span>
+        <span class="tech-pill">Hugging Face</span>
+      </div>
+    </div>
+    <div class="service-details">
+      <div class="detail-item">
+        <h4>Modèle de classification métier</h4>
+        <p>Entraînement sur vos données historiques pour classer automatiquement tickets, emails, documents selon vos catégories spécifiques.</p>
+        <span class="metric">Précision &gt;94% sur données clients réels</span>
+      </div>
+      <div class="detail-item">
+        <h4>Génération dans votre ton de marque</h4>
+        <p>Fine-tuning sur vos contenus existants pour que le modèle écrive exactement dans votre style éditorial. Fini les textes génériques.</p>
+        <span class="metric">↓ Temps de relecture -60%</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PRICING -->
+<div class="pricing-section">
+  <div class="section-label">// Investissement</div>
+  <h2 style="font-size: clamp(2rem,4vw,3rem); font-weight:800; letter-spacing:-0.03em;">Transparent sur les prix.<br>Précis sur la valeur.</h2>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">2 500€</div>
+      <div class="plan-period">projet one-shot</div>
+      <p class="plan-desc">Pour tester l'IA sur un workflow précis avant de scaler.</p>
+      <ul class="plan-features">
+        <li>1 agent ou 1 workflow automatisé</li>
+        <li>Durée : 2 semaines</li>
+        <li>Déploiement inclus</li>
+        <li>Documentation technique</li>
+        <li>30 jours de support post-livraison</li>
+      </ul>
+      <a href="contact.html" class="btn-plan btn-plan-ghost">Démarrer →</a>
+    </div>
+    <div class="pricing-card featured">
+      <span class="featured-badge">Recommandé</span>
+      <div class="plan-name">Growth</div>
+      <div class="plan-price">7 500€</div>
+      <div class="plan-period">projet complet / mois</div>
+      <p class="plan-desc">Transformation IA complète d'un processus métier critique.</p>
+      <ul class="plan-features">
+        <li>Jusqu'à 3 agents ou workflows</li>
+        <li>Durée : 30 jours</li>
+        <li>Intégrations API illimitées</li>
+        <li>Formation équipe incluse</li>
+        <li>90 jours de support prioritaire</li>
+        <li>Tableau de bord monitoring</li>
+      </ul>
+      <a href="contact.html" class="btn-plan btn-plan-primary">Démarrer →</a>
+    </div>
+    <div class="pricing-card">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price">Sur devis</div>
+      <div class="plan-period">partenariat long terme</div>
+      <p class="plan-desc">Pour les organisations qui veulent une transformation systémique.</p>
+      <ul class="plan-features">
+        <li>Agents illimités</li>
+        <li>Équipe dédiée (3+ experts)</li>
+        <li>Fine-tuning de modèles</li>
+        <li>Architecture data pipeline</li>
+        <li>SLA garanti 99.9%</li>
+        <li>Support 24/7</li>
+      </ul>
+      <a href="contact.html" class="btn-plan btn-plan-ghost">Nous contacter →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="section-label">// FAQ</div>
+  <h2 style="font-size: clamp(2rem,4vw,3rem); font-weight:800; letter-spacing:-0.03em; margin-bottom:0.5rem;">Questions fréquentes</h2>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <div class="faq-q">Faut-il avoir des développeurs en interne ?</div>
+      <div class="faq-a">Non. On livre clé en main. Documentation complète, formation incluse. Vos équipes peuvent maintenir sans nous après livraison.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Comment gérez-vous la confidentialité des données ?</div>
+      <div class="faq-a">Hébergement EU uniquement, RGPD natif, NDA signé avant tout accès. Vos données ne servent jamais à entraîner des modèles tiers.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quel est le délai réaliste pour voir des résultats ?</div>
+      <div class="faq-a">Les premiers workflows tournent en production à J+14. Les métriques ROI sont visibles à M+1 pour 90% de nos projets.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Que se passe-t-il si ça ne fonctionne pas comme prévu ?</div>
+      <div class="faq-a">Livraison itérative avec démos hebdomadaires. Si un module ne performe pas selon les métriques définies au brief, on le retravaile sans coût supplémentaire.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Travaillez-vous avec des entreprises de toutes tailles ?</div>
+      <div class="faq-a">PME, scale-ups et grandes entreprises. La condition : avoir un cas d'usage précis avec des données disponibles. Pas de PoC vague.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quels modèles d'IA utilisez-vous ?</div>
+      <div class="faq-a">GPT-4o, Claude 3.5, Mistral selon le cas d'usage. On choisit le modèle le plus performant pour votre problème, pas le plus à la mode.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <div class="logo">Nexus<span style="color:var(--accent)">AI</span></div>
+    <p>© 2025 NexusAI · <a href="#" style="color:var(--accent)">RGPD</a> · Données hébergées en UE</p>
+  </div>
+</footer>
+
+</body>
+</html>

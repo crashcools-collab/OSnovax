@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NexusAI Portfolio — Études de cas IA : agents autonomes, automatisations, fine-tuning. Résultats mesurables en Finance, Santé, Retail et SaaS.">
+  <title>Portfolio | NexusAI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050508; --bg2: #0c0c14; --accent: #4F46E5; --green: #10B981;
+      --white: #F0EEF8; --muted: #6b6b8a; --border: rgba(79,70,229,0.18);
+      --font-display: 'Syne', sans-serif; --font-mono: 'DM Mono', monospace;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--white); font-family: var(--font-display); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 4rem; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2.5rem; font-size: 0.85rem; font-family: var(--font-mono); }
+    .nav-links a { color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .nav-cta { background: var(--accent); color: var(--white); padding: 0.55rem 1.4rem; border-radius: 4px; font-size: 0.85rem; font-family: var(--font-mono); }
+
+    .page-hero {
+      padding: 10rem 4rem 5rem; background: var(--bg);
+      border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(79,70,229,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(79,70,229,0.06) 1px, transparent 1px);
+      background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 70% 50%, black 30%, transparent 100%);
+    }
+    .page-hero-content { position: relative; z-index: 2; }
+    .breadcrumb { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .breadcrumb a { color: var(--accent); }
+    .section-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--green); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+    h1 { font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+    .page-sub { font-family: var(--font-mono); font-size: 1rem; color: var(--muted); max-width: 560px; line-height: 1.8; margin-top: 1.5rem; }
+
+    /* FILTERS */
+    .filters-bar {
+      padding: 2rem 4rem; border-bottom: 1px solid var(--border);
+      display: flex; gap: 0.75rem; flex-wrap: wrap; background: var(--bg2);
+    }
+    .filter-btn {
+      padding: 0.5rem 1.2rem; border: 1px solid var(--border); border-radius: 100px;
+      font-size: 0.75rem; font-family: var(--font-mono); color: var(--muted);
+      background: transparent; cursor: pointer; transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(79,70,229,0.08); }
+
+    /* PORTFOLIO GRID */
+    .portfolio-section { padding: 5rem 4rem; }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+
+    .case-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;
+    }
+    .case-card:hover { transform: translateY(-5px); box-shadow: 0 30px 80px rgba(79,70,229,0.2); }
+    .case-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; }
+    .case-visual {
+      height: 260px; display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; position: relative; overflow: hidden;
+    }
+    .case-card.featured .case-visual { height: 100%; min-height: 300px; }
+    .case-visual.finance { background: linear-gradient(135deg, rgba(79,70,229,0.3), rgba(16,185,129,0.1)); }
+    .case-visual.sante { background: linear-gradient(135deg, rgba(16,185,129,0.3), rgba(79,70,229,0.1)); }
+    .case-visual.retail { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(79,70,229,0.2)); }
+    .case-visual.saas { background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(79,70,229,0.25)); }
+    .case-visual.logistique { background: linear-gradient(135deg, rgba(14,165,233,0.2), rgba(79,70,229,0.2)); }
+    .case-content { padding: 2rem; }
+    .case-sector {
+      font-size: 0.68rem; font-family: var(--font-mono); color: var(--green);
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem;
+    }
+    .case-content h2 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 0.75rem; }
+    .case-content h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 0.75rem; }
+    .case-content p { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+
+    .case-metrics { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .metric-item { text-align: left; }
+    .metric-num {
+      font-size: 1.8rem; font-weight: 800; letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--white), var(--muted));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .metric-label { font-size: 0.68rem; font-family: var(--font-mono); color: var(--muted); }
+
+    .case-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .case-tag {
+      padding: 0.25rem 0.7rem; border: 1px solid var(--border); border-radius: 4px;
+      font-size: 0.66rem; font-family: var(--font-mono); color: var(--muted);
+    }
+    .case-link {
+      display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1rem;
+      font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent);
+      padding: 0.6rem 1.2rem; border: 1px solid var(--border); border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .case-link:hover { border-color: var(--accent); background: rgba(79,70,229,0.08); }
+
+    /* STATS BANDE */
+    .stats-band {
+      background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 3.5rem 4rem; display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-big {
+      font-size: 3rem; font-weight: 800; letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--accent), var(--green));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-label { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+
+    /* CTA BOTTOM */
+    .cta-section {
+      padding: 7rem 4rem; text-align: center; background: var(--bg);
+      position: relative; overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute; width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(79,70,229,0.2) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+    }
+    .cta-inner { position: relative; z-index: 2; }
+    .cta-section h2 { font-size: clamp(2rem,4vw,3.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .cta-section p { font-family: var(--font-mono); font-size: 0.9rem; color: var(--muted); margin-bottom: 2rem; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--accent); color: var(--white); padding: 0.9rem 2.2rem;
+      border-radius: 6px; font-size: 0.9rem; font-family: var(--font-mono); transition: all 0.2s;
+    }
+    .btn-primary:hover { background: #6b63f5; transform: translateY(-2px); }
+
+    footer {
+      background: var(--bg2); border-top: 1px solid var(--border); padding: 2.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      .page-hero, .portfolio-section, .cta-section { padding: 5rem 1.5rem; }
+      .filters-bar, .stats-band { padding: 2rem 1.5rem; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .case-card.featured { grid-column: span 1; display: block; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Nexus<span>AI</span></div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html" class="active">Portfolio</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Démarrer un projet →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-grid-bg"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> / Portfolio</div>
+    <div class="section-label">// Cas clients</div>
+    <h1>Projets livrés.<br>Résultats prouvés.</h1>
+    <p class="page-sub">Pas de démos. Que des systèmes en production avec des métriques réelles.</p>
+  </div>
+</div>
+
+<div class="stats-band">
+  <div class="stat-item"><div class="stat-big">47</div><div class="stat-label">Projets livrés</div></div>
+  <div class="stat-item"><div class="stat-big">3.2M€</div><div class="stat-label">Économies générées pour nos clients</div></div>
+  <div class="stat-item"><div class="stat-big">30j</div><div class="stat-label">Délai moyen de livraison</div></div>
+  <div class="stat-item"><div class="stat-big">98%</div><div class="stat-label">Taux de satisfaction client</div></div>
+  <div class="stat-item"><div class="stat-big">5</div><div class="stat-label">Secteurs couverts</div></div>
+</div>
+
+<div class="filters-bar">
+  <button class="filter-btn active" onclick="filterCards('all', this)">Tous</button>
+  <button class="filter-btn" onclick="filterCards('finance', this)">Finance</button>
+  <button class="filter-btn" onclick="filterCards('sante', this)">Santé</button>
+  <button class="filter-btn" onclick="filterCards('retail', this)">Retail</button>
+  <button class="filter-btn" onclick="filterCards('saas', this)">SaaS</button>
+  <button class="filter-btn" onclick="filterCards('logistique', this)">Logistique</button>
+</div>
+
+<div class="portfolio-section">
+  <div class="portfolio-grid">
+
+    <div class="case-card featured" data-sector="finance">
+      <div class="case-visual finance">🏦</div>
+      <div class="case-content">
+        <div class="case-sector">Finance · Agent IA</div>
+        <h2>Agent de conformité réglementaire automatisé</h2>
+        <p>Une banque régionale traitait manuellement 2000+ documents réglementaires par mois (ACPR, AMF). Délai d'analyse : 3 semaines. Notre agent lit, classe, extrait les obligations réglementaires et génère les rapports de conformité.</p>
+        <div class="case-metrics">
+          <div class="metric-item"><div class="metric-num">78%</div><div class="metric-label">Réduction du temps d'audit</div></div>
+          <div class="metric-item"><div class="metric-num">2 000+</div><div class="metric-label">Docs traités/jour</div></div>
+          <div class="metric-item"><div class="metric-num">3j→8h</div><div class="metric-label">Délai rapport conformité</div></div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">Claude API</span>
+          <span class="case-tag">LangChain</span>
+          <span class="case-tag">PostgreSQL</span>
+          <span class="case-tag">AWS Lambda</span>
+        </div>
+        <a href="#" class="case-link">Lire l'étude de cas →</a>
+      </div>
+    </div>
+
+    <div class="case-card" data-sector="sante">
+      <div class="case-visual sante">🏥</div>
+      <div class="case-content">
+        <div class="case-sector">Santé · Chatbot IA</div>
+        <h3>Triage médical pré-consultation</h3>
+        <p>Clinique privée : 40% des RDV étaient non nécessaires. Agent de triage qui pré-qualifie les patients, recueille les symptômes et oriente vers le bon spécialiste.</p>
+        <div class="case-metrics">
+          <div class="metric-item"><div class="metric-num">-40%</div><div class="metric-label">RDV inutiles</div></div>
+          <div class="metric-item"><div class="metric-num">+34%</div><div class="metric-label">Satisfaction patient</div></div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">GPT-4o</span>
+          <span class="case-tag">Twilio</span>
+          <span class="case-tag">RGPD Santé</span>
+        </div>
+        <a href="#" class="case-link">Lire l'étude de cas →</a>
+      </div>
+    </div>
+
+    <div class="case-card" data-sector="retail">
+      <div class="case-visual retail">🛒</div>
+      <div class="case-content">
+        <div class="case-sector">Retail · Recommandation IA</div>
+        <h3>Moteur de recommandation temps réel</h3>
+        <p>E-commerce 500K utilisateurs. Personnalisation des suggestions produits basée sur l'historique, le contexte et les tendances en temps réel.</p>
+        <div class="case-metrics">
+          <div class="metric-item"><div class="metric-num">+23%</div><div class="metric-label">Panier moyen</div></div>
+          <div class="metric-item"><div class="metric-num">+18%</div><div class="metric-label">Taux de conversion</div></div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">Embeddings</span>
+          <span class="case-tag">Pinecone</span>
+          <span class="case-tag">Next.js API</span>
+        </div>
+        <a href="#" class="case-link">Lire l'étude de cas →</a>
+      </div>
+    </div>
+
+    <div class="case-card" data-sector="saas">
+      <div class="case-visual saas">🚀</div>
+      <div class="case-content">
+        <div class="case-sector">SaaS · Automatisation</div>
+        <h3>Pipeline d'onboarding client automatisé</h3>
+        <p>Scale-up B2B : l'onboarding manuel prenait 2 semaines et monopolisait 2 CSM. Automation complète : création compte, intégrations, formation guidée, premier rapport.</p>
+        <div class="case-metrics">
+          <div class="metric-item"><div class="metric-num">14j→2j</div><div class="metric-label">Délai onboarding</div></div>
+          <div class="metric-item"><div class="metric-num">-80%</div><div class="metric-label">Charge CSM</div></div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">Make</span>
+          <span class="case-tag">HubSpot API</span>
+          <span class="case-tag">Slack</span>
+        </div>
+        <a href="#" class="case-link">Lire l'étude de cas →</a>
+      </div>
+    </div>
+
+    <div class="case-card" data-sector="logistique">
+      <div class="case-visual logistique">📦</div>
+      <div class="case-content">
+        <div class="case-sector">Logistique · Agent IA</div>
+        <h3>Agent de gestion des litiges fournisseurs</h3>
+        <p>3PL traitant 200+ litiges/mois par email. Agent qui lit, classe, répond aux cas simples et escalade les cas complexes avec contexte structuré.</p>
+        <div class="case-metrics">
+          <div class="metric-item"><div class="metric-num">70%</div><div class="metric-label">Litiges résolus auto</div></div>
+          <div class="metric-item"><div class="metric-num">-65%</div><div class="metric-label">Temps de traitement</div></div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">Claude API</span>
+          <span class="case-tag">Gmail API</span>
+          <span class="case-tag">n8n</span>
+        </div>
+        <a href="#" class="case-link">Lire l'étude de cas →</a>
+      </div>
+    </div>
+
+    <div class="case-card" data-sector="saas">
+      <div class="case-visual saas">📊</div>
+      <div class="case-content">
+        <div class="case-sector">SaaS · Reporting IA</div>
+        <h3>Génération automatique de rapports analytiques</h3>
+        <p>Agence marketing : 3h de reporting hebdomadaire par client. Agent qui agrège les données (GA4, Meta Ads, Stripe) et génère un rapport narratif personnalisé.</p>
+        <div class="case-metrics">
+          <div class="metric-item"><div class="metric-num">-92%</div><div class="metric-label">Temps reporting</div></div>
+          <div class="metric-item"><div class="metric-num">+12</div><div class="metric-label">Clients gérés sans recruter</div></div>
+        </div>
+        <div class="case-tags">
+          <span class="case-tag">OpenAI API</span>
+          <span class="case-tag">GA4 API</span>
+          <span class="case-tag">Make</span>
+          <span class="case-tag">SendGrid</span>
+        </div>
+        <a href="#" class="case-link">Lire l'étude de cas →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <div class="section-label" style="margin-bottom:1rem;">// Votre projet</div>
+    <h2>Votre cas d'usage<br>mérite le même traitement.</h2>
+    <p>Dites-nous votre problème. On vous dit en 24h si et comment l'IA peut le résoudre.</p>
+    <a href="contact.html" class="btn-primary">Parler de mon projet →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">Nexus<span style="color:var(--accent)">AI</span></div>
+  <p>© 2025 NexusAI · Conforme RGPD · Hébergement EU</p>
+</footer>
+
+<script>
+function filterCards(sector, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.case-card').forEach(card => {
+    if (sector === 'all' || card.dataset.sector === sector) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) { el.target.style.opacity = '1'; el.target.style.transform = 'translateY(0)'; }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.case-card').forEach(el => {
+  el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

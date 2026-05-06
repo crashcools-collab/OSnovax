@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contactez NexusAI — Démarrez votre projet IA. Audit gratuit de 30 minutes. Réponse en 24h.">
+  <title>Contact | NexusAI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050508; --bg2: #0c0c14; --accent: #4F46E5; --green: #10B981;
+      --white: #F0EEF8; --muted: #6b6b8a; --border: rgba(79,70,229,0.18);
+      --font-display: 'Syne', sans-serif; --font-mono: 'DM Mono', monospace;
+      --glow: 0 0 40px rgba(79,70,229,0.3);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--white); font-family: var(--font-display); overflow-x: hidden; min-height: 100vh; }
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 4rem; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2.5rem; font-size: 0.85rem; font-family: var(--font-mono); }
+    .nav-links a { color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .nav-cta { background: var(--accent); color: var(--white); padding: 0.55rem 1.4rem; border-radius: 4px; font-size: 0.85rem; font-family: var(--font-mono); }
+
+    .contact-layout {
+      display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh;
+    }
+
+    /* LEFT */
+    .contact-left {
+      padding: 10rem 5rem 5rem; background: var(--bg2);
+      border-right: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(79,70,229,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(79,70,229,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .contact-left-content { position: relative; z-index: 2; }
+    .breadcrumb { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); margin-bottom: 2rem; }
+    .breadcrumb a { color: var(--accent); }
+    .section-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--green); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+    h1 { font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 1.5rem; }
+    .contact-desc { font-family: var(--font-mono); font-size: 0.9rem; color: var(--muted); line-height: 1.8; max-width: 420px; margin-bottom: 3rem; }
+
+    .contact-infos { margin-bottom: 3rem; }
+    .info-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.2rem 0; border-bottom: 1px solid var(--border);
+    }
+    .info-item:last-child { border-bottom: none; }
+    .info-icon {
+      width: 36px; height: 36px; background: rgba(79,70,229,0.15);
+      border: 1px solid var(--border); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0;
+    }
+    .info-label { font-size: 0.7rem; font-family: var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .info-value { font-size: 0.9rem; font-weight: 600; margin-top: 0.2rem; }
+    .info-value a { color: var(--accent); }
+
+    .trust-items { display: flex; flex-direction: column; gap: 0.75rem; }
+    .trust-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted);
+    }
+    .trust-item span:first-child { color: var(--green); }
+
+    /* RIGHT - FORM */
+    .contact-right {
+      padding: 10rem 5rem 5rem; background: var(--bg);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .form-title { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .form-subtitle { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); margin-bottom: 2.5rem; }
+
+    .form-group { margin-bottom: 1.5rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    label { display: block; font-size: 0.75rem; font-family: var(--font-mono); color: var(--muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+      width: 100%; background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.85rem 1.1rem; color: var(--white);
+      font-family: var(--font-mono); font-size: 0.85rem; outline: none;
+      transition: border-color 0.2s; appearance: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+    select { cursor: pointer; }
+    select option { background: var(--bg2); color: var(--white); }
+    textarea { resize: vertical; min-height: 120px; }
+
+    /* Budget selector */
+    .budget-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    .budget-opt { display: none; }
+    .budget-label {
+      display: block; text-align: center; padding: 0.65rem;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted);
+      cursor: pointer; transition: all 0.2s; user-select: none;
+    }
+    .budget-opt:checked + .budget-label {
+      border-color: var(--accent); color: var(--accent); background: rgba(79,70,229,0.1);
+    }
+
+    /* Urgency */
+    .urgency-options { display: flex; gap: 0.75rem; }
+    .urgency-opt { display: none; }
+    .urgency-label {
+      flex: 1; display: block; text-align: center; padding: 0.65rem;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);
+      cursor: pointer; transition: all 0.2s; user-select: none;
+    }
+    .urgency-opt:checked + .urgency-label { border-color: var(--accent); color: var(--accent); background: rgba(79,70,229,0.1); }
+
+    .rgpd-check { display: flex; align-items: flex-start; gap: 0.75rem; margin-top: 1.5rem; }
+    .rgpd-check input[type="checkbox"] { width: 16px; height: 16px; min-width: 16px; margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
+    .rgpd-check label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); line-height: 1.6; cursor: pointer; text-transform: none; letter-spacing: 0; }
+    .rgpd-check label a { color: var(--accent); }
+
+    .btn-submit {
+      width: 100%; padding: 1rem; background: var(--accent); color: var(--white);
+      border: none; border-radius: 8px; font-family: var(--font-mono); font-size: 0.9rem;
+      cursor: pointer; transition: all 0.2s; margin-top: 1.5rem; font-weight: 600;
+    }
+    .btn-submit:hover { background: #6b63f5; box-shadow: var(--glow); }
+
+    .form-note { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); text-align: center; margin-top: 1rem; }
+
+    /* SUCCESS STATE */
+    .success-state {
+      display: none; text-align: center; padding: 3rem 0;
+    }
+    .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .success-state h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
+    .success-state p { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); line-height: 1.8; }
+
+    footer {
+      background: var(--bg2); border-top: 1px solid var(--border); padding: 2rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .contact-left { padding: 8rem 1.5rem 4rem; }
+      .contact-right { padding: 3rem 1.5rem 4rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .budget-options { grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Nexus<span>AI</span></div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html" class="active">Contact</a>
+  </div>
+  <a href="#form" class="nav-cta">Démarrer un projet →</a>
+</nav>
+
+<div class="contact-layout">
+
+  <!-- LEFT -->
+  <div class="contact-left">
+    <div class="hero-grid-bg"></div>
+    <div class="contact-left-content">
+      <div class="breadcrumb"><a href="index.html">Accueil</a> / Contact</div>
+      <div class="section-label">// Parlons concret</div>
+      <h1>Votre projet<br>mérite mieux<br>qu'un formulaire.</h1>
+      <p class="contact-desc">Remplissez le formulaire. On revient vers vous sous 24h avec une analyse préliminaire de votre cas et une proposition de call de 30 minutes. Gratuit. Sans engagement.</p>
+
+      <div class="contact-infos">
+        <div class="info-item">
+          <div class="info-icon">📧</div>
+          <div>
+            <div class="info-label">Email</div>
+            <div class="info-value"><a href="mailto:hello@nexusai.fr">hello@nexusai.fr</a></div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">⏱️</div>
+          <div>
+            <div class="info-label">Délai de réponse</div>
+            <div class="info-value">Sous 24h (jours ouvrés)</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🌍</div>
+          <div>
+            <div class="info-label">Disponibilité</div>
+            <div class="info-value">Europe, Amérique du Nord, Asie</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">💬</div>
+          <div>
+            <div class="info-label">Langues</div>
+            <div class="info-value">Français · English</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-items">
+        <div class="trust-item"><span>✓</span> Audit express gratuit inclus</div>
+        <div class="trust-item"><span>✓</span> NDA disponible avant partage</div>
+        <div class="trust-item"><span>✓</span> Données traitées en UE (RGPD)</div>
+        <div class="trust-item"><span>✓</span> Pas de démarchage commercial</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="contact-right" id="form">
+    <div id="formContainer">
+      <div class="form-title">Décrivez votre projet</div>
+      <div class="form-subtitle">Plus vous êtes précis, meilleure sera notre analyse initiale.</div>
+
+      <div class="form-row">
+        <div>
+          <label for="firstname">Prénom *</label>
+          <input type="text" id="firstname" placeholder="Jean" required>
+        </div>
+        <div>
+          <label for="lastname">Nom *</label>
+          <input type="text" id="lastname" placeholder="Dupont" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label for="email">Email professionnel *</label>
+          <input type="email" id="email" placeholder="jean@entreprise.com" required>
+        </div>
+        <div>
+          <label for="phone">Téléphone</label>
+          <input type="tel" id="phone" placeholder="+33 6 00 00 00 00">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label for="company">Entreprise *</label>
+          <input type="text" id="company" placeholder="NomSociété SAS" required>
+        </div>
+        <div>
+          <label for="sector">Secteur</label>
+          <select id="sector">
+            <option value="">Choisir...</option>
+            <option>Finance / Banque</option>
+            <option>Santé</option>
+            <option>Retail / E-commerce</option>
+            <option>SaaS / Tech</option>
+            <option>Logistique</option>
+            <option>Industrie</option>
+            <option>Marketing / Agence</option>
+            <option>Autre</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="service">Type de projet</label>
+        <select id="service">
+          <option value="">Choisir...</option>
+          <option>Agent IA autonome</option>
+          <option>Automatisation de workflow</option>
+          <option>Fine-tuning de modèle</option>
+          <option>Data pipeline IA</option>
+          <option>Intégration API</option>
+          <option>Audit & Stratégie IA</option>
+          <option>Je ne sais pas encore</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Budget estimé</label>
+        <div class="budget-options">
+          <div><input type="radio" name="budget" id="b1" class="budget-opt" value="< 5k€"><label for="b1" class="budget-label">&lt; 5 000€</label></div>
+          <div><input type="radio" name="budget" id="b2" class="budget-opt" value="5-15k€"><label for="b2" class="budget-label">5 000 – 15 000€</label></div>
+          <div><input type="radio" name="budget" id="b3" class="budget-opt" value="15-30k€"><label for="b3" class="budget-label">15 000 – 30 000€</label></div>
+          <div><input type="radio" name="budget" id="b4" class="budget-opt" value="30-50k€"><label for="b4" class="budget-label">30 000 – 50 000€</label></div>
+          <div><input type="radio" name="budget" id="b5" class="budget-opt" value="> 50k€"><label for="b5" class="budget-label">&gt; 50 000€</label></div>
+          <div><input type="radio" name="budget" id="b6" class="budget-opt" value="NSP"><label for="b6" class="budget-label">À définir</label></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Urgence</label>
+        <div class="urgency-options">
+          <div><input type="radio" name="urgency" id="u1" class="urgency-opt" value="exploratoire"><label for="u1" class="urgency-label">Exploratoire</label></div>
+          <div><input type="radio" name="urgency" id="u2" class="urgency-opt" value="3-mois"><label for="u2" class="urgency-label">Dans 3 mois</label></div>
+          <div><input type="radio" name="urgency" id="u3" class="urgency-opt" value="asap"><label for="u3" class="urgency-label">ASAP</label></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Décrivez votre problème *</label>
+        <textarea id="message" placeholder="Ex: Notre équipe passe 15h/semaine à traiter des emails clients manuellement. On cherche à automatiser la qualification et la réponse aux demandes courantes..." required></textarea>
+      </div>
+
+      <div class="rgpd-check">
+        <input type="checkbox" id="rgpd" required>
+        <label for="rgpd">J'accepte que mes données soient utilisées pour traiter ma demande conformément à la <a href="#">politique de confidentialité</a> de NexusAI. Aucun démarchage commercial. Données supprimées sous 30 jours si pas de suite.</label>
+      </div>
+
+      <button class="btn-submit" onclick="submitForm()">Envoyer ma demande →</button>
+      <p class="form-note">🔒 Données chiffrées en transit · Hébergement UE · RGPD</p>
+    </div>
+
+    <div class="success-state" id="successState">
+      <div class="success-icon">✅</div>
+      <h3>Demande reçue !</h3>
+      <p>On a bien reçu votre demande.<br>Un membre de l'équipe vous contactera <strong>sous 24h</strong> avec une analyse préliminaire de votre cas et une proposition de call.<br><br>En attendant, <a href="blog.html" style="color: var(--accent);">lisez nos articles</a> sur les architectures d'agents IA.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="logo">Nexus<span style="color:var(--accent)">AI</span></div>
+  <p>© 2025 NexusAI · <a href="#" style="color:var(--accent)">RGPD</a> · Données hébergées en UE</p>
+</footer>
+
+<script>
+function submitForm() {
+  const required = ['firstname', 'lastname', 'email', 'company', 'message'];
+  let valid = true;
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.style.borderColor = '#ef4444';
+      valid = false;
+    } else {
+      el.style.borderColor = '';
+    }
+  });
+  const rgpd = document.getElementById('rgpd');
+  if (!rgpd.checked) {
+    rgpd.style.outline = '2px solid #ef4444';
+    valid = false;
+  }
+  if (!valid) return;
+
+  // Simulate form submission
+  document.getElementById('formContainer').style.display = 'none';
+  document.getElementById('successState').style.display = 'block';
+  document.getElementById('successState').style.opacity = '0';
+  document.getElementById('successState').style.transform = 'translateY(20px)';
+  document.getElementById('successState').style.transition = 'all 0.5s ease';
+  setTimeout(() => {
+    document.getElementById('successState').style.opacity = '1';
+    document.getElementById('successState').style.transform = 'translateY(0)';
+  }, 50);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+# Automatisations NexusAI — Make / n8n
+
+## Workflow 1 : Nouveau contact → Notification + CRM
+
+```yaml
+# make_workflow_new_contact.yaml
+version: '3'
+name: "NexusAI - Nouveau lead site web"
+
+trigger:
+  type: webhook
+  url: "{{NETLIFY_FORM_WEBHOOK_URL}}"
+  # Obtenir dans Netlify > Forms > Outgoing Notifications > Add notification > Webhook
+
+actions:
+  - name: "Envoyer notification Slack"
+    type: slack
+    channel: "#leads"
+    message: |
+      🔥 Nouveau lead sur le site !
+      👤 {{data.firstname}} {{data.lastname}}
+      🏢 {{data.company}} ({{data.sector}})
+      📧 {{data.email}}
+      💰 Budget: {{data.budget}}
+      ⚡ Urgence: {{data.urgency}}
+      📝 Message: {{data.message}}
+
+  - name: "Créer contact HubSpot"
+    type: hubspot_create_contact
+    fields:
+      email: "{{data.email}}"
+      firstname: "{{data.firstname}}"
+      lastname: "{{data.lastname}}"
+      company: "{{data.company}}"
+      phone: "{{data.phone}}"
+      hs_lead_status: "NEW"
+      lead_source: "Site web"
+      budget_estimate: "{{data.budget}}"
+
+  - name: "Email de confirmation au lead"
+    type: email
+    provider: sendgrid
+    from: "hello@nexusai.fr"
+    to: "{{data.email}}"
+    subject: "✓ Votre demande NexusAI — réponse sous 24h"
+    template: |
+      Bonjour {{data.firstname}},
+
+      Nous avons bien reçu votre demande concernant :
+      "{{data.message|truncate:100}}"
+
+      Un membre de notre équipe vous contactera sous 24h (jours ouvrés)
+      pour discuter de votre projet et proposer un call de 30 minutes.
+
+      En attendant, vous pouvez consulter nos études de cas :
+      https://nexusai.fr/portfolio.html
+
+      — L'équipe NexusAI
+```
+
+---
+
+## Workflow 2 : Newsletter → Séquence d'onboarding
+
+```yaml
+# make_workflow_newsletter_onboarding.yaml
+version: '3'
+name: "NexusAI - Onboarding nouvel abonné blog"
+
+trigger:
+  type: webhook
+  url: "{{NEWSLETTER_FORM_WEBHOOK}}"
+
+actions:
+  - name: "Attendre 0 minutes"
+    type: delay
+    duration: 0
+
+  - name: "Email J+0 : Bienvenue"
+    type: email
+    subject: "Bienvenue — voici les 3 articles à lire en premier"
+    body: |
+      Bienvenue dans la newsletter NexusAI.
+      
+      Pour démarrer, voici les 3 articles les plus lus :
+      
+      → 5 workflows Make qui éliminent 10h/semaine
+      → Architecture d'un agent IA multi-outils
+      → RAG vs Fine-tuning : benchmarks
+
+  - name: "Attendre 3 jours"
+    type: delay
+    duration: 3
+    unit: days
+
+  - name: "Email J+3 : Cas client"
+    type: email
+    subject: "Comment on a automatisé 70% des litiges d'un 3PL"
+    body: "Étude de cas complète avec architecture et métriques..."
+
+  - name: "Attendre 7 jours"
+    type: delay
+    duration: 7
+    unit: days
+
+  - name: "Email J+7 : CTA soft"
+    type: email
+    subject: "Votre projet IA — on peut regarder ça ensemble ?"
+    body: "Si vous avez un cas d'usage en tête, on fait un audit de 30 min gratuit..."
+```
+
+---
+
+## Workflow 3 : Reporting hebdomadaire
+
+```yaml
+# make_workflow_weekly_report.yaml
+version: '3'
+name: "NexusAI - Rapport hebdo automatique"
+
+trigger:
+  type: schedule
+  cron: "0 8 * * 1"   # Chaque lundi à 8h00
+
+actions:
+  - name: "Fetch GA4 data"
+    type: http_request
+    url: "https://analyticsdata.googleapis.com/v1beta/properties/{{GA4_PROPERTY_ID}}:runReport"
+    method: POST
+    auth: "{{GA4_SERVICE_ACCOUNT}}"
+    body:
+      metrics: [{ name: "sessions" }, { name: "activeUsers" }, { name: "conversions" }]
+      dateRanges: [{ startDate: "7daysAgo", endDate: "today" }]
+
+  - name: "Fetch HubSpot new leads"
+    type: hubspot_list_contacts
+    filter: "created_date > last_week"
+
+  - name: "Générer rapport avec IA"
+    type: anthropic_claude
+    model: "claude-sonnet-4-20250514"
+    prompt: |
+      Génère un rapport hebdomadaire concis en Markdown à partir de ces données :
+      
+      GA4 : {{step1.result}}
+      Leads HubSpot : {{step2.result}}
+      
+      Format : 
+      - Chiffres clés (3 lignes max)
+      - Ce qui a bien fonctionné
+      - Points d'attention
+      - Actions recommandées cette semaine
+
+  - name: "Envoyer rapport Slack"
+    type: slack
+    channel: "#weekly-report"
+    message: "📊 *Rapport semaine du {{date}}*\n\n{{step3.result}}"
+```
+
+---
+
+## Variables d'environnement à configurer
+
+```env
+# Netlify
+NETLIFY_FORM_WEBHOOK_URL=https://hooks.zapier.com/...  # ou Make webhook
+
+# Slack
+SLACK_BOT_TOKEN=xoxb-...
+SLACK_LEADS_CHANNEL_ID=C...
+SLACK_REPORT_CHANNEL_ID=C...
+
+# SendGrid
+SENDGRID_API_KEY=SG....
+FROM_EMAIL=hello@nexusai.fr
+
+# HubSpot
+HUBSPOT_ACCESS_TOKEN=pat-...
+HUBSPOT_PORTAL_ID=...
+
+# Google Analytics
+GA4_PROPERTY_ID=...
+GA4_SERVICE_ACCOUNT_JSON=...  # JSON credentials
+
+# Anthropic (pour le reporting IA)
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+---
+
+## Déploiement Make.com
+
+1. Créer un compte sur make.com
+2. New Scenario → Import blueprint → Coller le JSON Make
+3. Configurer les connexions (Slack, SendGrid, HubSpot)
+4. Activer le scenario
+5. Copier l'URL webhook et la coller dans Netlify Forms
+
+## Déploiement n8n (self-hosted)
+
+```bash
+docker run -it --rm \
+  -p 5678:5678 \
+  -e N8N_BASIC_AUTH_ACTIVE=true \
+  -e N8N_BASIC_AUTH_USER=admin \
+  -e N8N_BASIC_AUTH_PASSWORD=votre_password \
+  -v ~/.n8n:/home/node/.n8n \
+  n8nio/n8n
+
+# Interface : http://localhost:5678
+# Importer les workflows JSON depuis l'interface
+```
